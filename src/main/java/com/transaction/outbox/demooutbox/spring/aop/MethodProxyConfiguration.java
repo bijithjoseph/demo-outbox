@@ -2,11 +2,15 @@ package com.transaction.outbox.demooutbox.spring.aop;
 
 import com.transaction.outbox.demooutbox.api.InvocationInstantiable;
 import com.transaction.outbox.demooutbox.configuration.ApplicationConfiguration;
+import com.transaction.outbox.demooutbox.core.DefaultOutBoxCleaner;
+import com.transaction.outbox.demooutbox.core.DefaultOutbox;
 import com.transaction.outbox.demooutbox.core.Outbox;
 import com.transaction.outbox.demooutbox.core.OutboxCleaner;
 import com.transaction.outbox.demooutbox.core.dao.DataAccessor;
 import com.transaction.outbox.demooutbox.spring.ImportAwareConfiguration;
 import com.transaction.outbox.demooutbox.spring.SpringBeanProxyRipper;
+import com.transaction.outbox.demooutbox.spring.jpa.DefaultJpaBasedDataAccessor;
+import com.transaction.outbox.demooutbox.spring.repository.TransactionOutboxEntryRepository;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -48,7 +52,7 @@ public class MethodProxyConfiguration extends ImportAwareConfiguration {
 
     @Bean
     public Outbox outbox(ExecutorService executorService, DataAccessor dataAccessor,OutboxCleaner outboxCleaner){
-        return  new DefaultOubox(executorService, dataAccessor,outboxCleaner);
+        return  new DefaultOutbox(executorService, dataAccessor,outboxCleaner);
     }
 
     @Bean
